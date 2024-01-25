@@ -1,0 +1,380 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+castellatedMesh true;
+snap            true;
+addLayers       false;
+
+
+geometry
+{
+    stationaryShaft.stl
+    {
+        type        triSurfaceMesh;
+        name        stationaryShaft;
+    }
+    
+    shaftRotational.stl
+    {
+        type        triSurfaceMesh;
+        name        shaftRotational;
+    }
+
+    leftPort.stl
+    {
+        type        triSurfaceMesh;
+        name        leftPort;
+    }
+
+    rightPort.stl
+    {
+        type        triSurfaceMesh;
+        name        rightPort;
+    }
+
+    discSide.stl
+    {
+        type        triSurfaceMesh;
+        name        discSide;
+    }
+
+    bottomPort.stl
+    {
+        type        triSurfaceMesh;
+        name        bottomPort;
+    }
+
+    topPort.stl
+    {
+        type        triSurfaceMesh;
+        name        topPort;
+    }
+
+    frontCounterPlate.stl
+    {
+        type        triSurfaceMesh;
+        name        frontCounterPlate;
+    }
+
+    discFront.stl
+    {
+        type        triSurfaceMesh;
+        name        discFront;
+    }
+
+    backCounterPlate.stl
+    {
+        type        triSurfaceMesh;
+        name        backCounterPlate;
+    }
+
+    AMI.stl
+    {
+        type        triSurfaceMesh;
+        name        AMI;
+    }
+
+    sideWall.stl
+    {
+        type        triSurfaceMesh;
+        name        sideWall;
+    }
+
+    discBack.stl
+    {
+        type        triSurfaceMesh;
+        name        discBack;
+    }
+
+};
+
+
+
+
+castellatedMeshControls
+{
+
+    maxLocalCells 20000000;
+
+    maxGlobalCells 400000000;
+
+    minRefinementCells 0;
+
+    maxLoadUnbalance 0.10;
+
+    nCellsBetweenLevels 2;
+
+    features
+    (
+
+        {
+            file        "stationaryShaft.eMesh";
+            level       0;
+        }
+
+        {
+            file        "shaftRotational.eMesh";
+            level       0;
+        }
+        
+        {
+            file        "discFront.eMesh";
+            level       0;
+        }
+
+        {
+            file        "discSide.eMesh";
+            level       0;
+        }
+
+        {
+            file        "discBack.eMesh";
+            level       0;
+        }
+
+        {
+            file        "backCounterPlate.eMesh";
+            level       0;
+        }
+
+        {
+            file        "frontCounterPlate.eMesh";
+            level       0;
+        }
+
+        {
+            file        "AMI.eMesh";
+            level       0;
+        }
+
+        {
+            file        "sideWall.eMesh";
+            level       0;
+        }
+    );
+
+    refinementSurfaces
+    {
+        AMI
+        {
+            level       (3 3);
+
+            
+            cellZone    cell_inner_volume;
+            faceZone    face_inner_volume;
+
+            faceType    internal;
+            cellZoneInside  inside;
+        }
+
+        discFront
+        {
+            level       (3 4);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+        discSide
+        {
+            level       (3 4);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+        discBack
+        {
+            level       (3 4);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+        
+        frontCounterPlate
+        {
+            level       (3 4);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+        backCounterPlate
+        {
+            level       (3 4);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+        
+        stationaryShaft
+        {
+            level       (2 3);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+        shaftRotational
+        {
+            level       (3 4);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+    
+    
+        sideWall
+        {
+            level       (2 3);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+
+        leftPort
+        {
+            level       (0 2);
+            patchInfo
+            {
+                type patch;
+            }
+        }
+
+        rightPort
+        {
+            level       (0 2);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+        
+        bottomPort
+        {
+            level       (0 2);
+            patchInfo
+            {
+                type patch;
+            }
+        }
+        
+        topPort
+        {
+            level       (0 2);
+            patchInfo
+            {
+                type wall;
+            }
+        }
+    
+    }
+
+    resolveFeatureAngle 30;
+
+
+    refinementRegions
+    {
+
+    }
+
+
+  
+    locationInMesh (0.0 -0.079 0.0); 
+
+    allowFreeStandingZoneFaces true;
+}
+
+
+
+
+snapControls
+{
+    
+    nSmoothPatch 3;
+
+   
+    tolerance 2.0;
+
+    nSolveIter 30;
+
+    nRelaxIter 10; 
+
+    nFeatureSnapIter 30; 
+
+    implicitFeatureSnap false; 
+
+    explicitFeatureSnap true; 
+
+    multiRegionFeatureSnap false; 
+}
+
+
+
+addLayersControls
+{
+    
+    relativeSizes true;
+
+    layers
+    {
+    }
+
+    expansionRatio 1.0;
+
+    finalLayerThickness 0.3;
+
+    minThickness 0.1;
+
+    nGrow 0;
+
+    featureAngle 30;
+
+    nRelaxIter 3;
+
+    nSmoothSurfaceNormals 1;
+
+    nSmoothNormals 3;
+
+    nSmoothThickness 10;
+
+    maxFaceThicknessRatio 0.5;
+
+    maxThicknessToMedialRatio 0.3;
+
+    minMedianAxisAngle 90;
+
+    nBufferCellsNoExtrude 0;
+
+    nLayerIter 50;
+}
+
+
+meshQualityControls
+{
+    #include "meshQualityDict"
+}
+
+
+mergeTolerance 1e-6;
+
+
+// ************************************************************************* //

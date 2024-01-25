@@ -1,0 +1,117 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  6                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 0.001;
+
+
+xmin  -7.0;
+xmax  25.0;
+ymin  -81.0;
+ymax  81.0;
+zmin  -81.0;
+zmax  81.0;
+
+lx #calc "$xmax - $xmin";
+dx 1;
+xcells #calc "floor(abs(($lx)/$dx))";
+
+ly #calc "$ymax - $ymin";
+dy 1;
+ycells #calc "floor(abs(($ly)/$dy))";
+
+lz #calc "$zmax - $zmin";
+dz 1;
+zcells #calc "floor(abs(($lz)/$dz))";
+
+vertices        
+(
+    ($xmin  $ymin  $zmin)
+    ($xmax  $ymin  $zmin)
+    ($xmax  $ymax  $zmin)
+    ($xmin  $ymax  $zmin)
+    ($xmin  $ymin  $zmax)
+    ($xmax  $ymin  $zmax)
+    ($xmax  $ymax  $zmax)
+    ($xmin  $ymax  $zmax)
+);
+
+blocks          
+(
+    hex (0 1 2 3 4 5 6 7) ($xcells $ycells $zcells) simpleGrading (1 1 1)
+);
+
+edges           
+(
+);
+
+boundary
+(
+    minX
+    {
+        type wall;
+        faces
+        (
+            (4 0 3 7)
+        );
+    }
+    maxX
+    {
+        type wall;
+        faces
+        (
+            (5 1 2 6)
+        );
+    }
+    minY
+    {
+        type wall;
+        faces
+        (
+            (4 0 1 5)
+        );
+    }
+    maxY
+    {
+        type wall;
+        faces
+        (
+            (7 3 2 6)
+        );
+    }
+    minZ
+    {
+        type wall;
+        faces
+        (
+            (0 1 2 3)
+        );
+    }
+    maxZ
+    {
+        type wall;
+        faces
+        (
+            (4 7 6 5)
+        );
+    }
+);
+
+mergePatchPairs 
+(
+);
+
+// ************************************************************************* //
+

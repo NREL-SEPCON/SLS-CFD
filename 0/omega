@@ -1,0 +1,73 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  6                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      omega;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 -1 0 0 0 0];
+
+internalField   uniform 0.1;
+
+boundaryField
+{
+    "disc(Front|Side|Back)" 
+    {
+        type	        omegaWallFunction;
+        value           $internalField;
+    }
+
+    "(front|back)CounterPlate" 
+    {
+        type	        omegaWallFunction;
+        value           $internalField;
+    }
+
+    stationaryShaft  
+    {
+        type	        omegaWallFunction;
+        value           $internalField;
+    } 
+
+    shaftRotational  
+    {
+        type	        omegaWallFunction;
+        value           $internalField;
+    } 
+ 
+    sideWall
+    {
+        type	        omegaWallFunction;
+        value           $internalField;
+    } 
+
+    "(top|right)Port"
+    {
+        type	        omegaWallFunction;
+        value           $internalField;
+    } 
+
+    leftPort
+    {
+	type		fixedValue;
+	value		$internalField;
+    }
+
+    bottomPort
+    {
+	type		fixedValue;
+	value		$internalField;
+    }
+
+}
+
+// ************************************************************************* //

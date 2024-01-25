@@ -1,0 +1,75 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  6                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      nuSgs;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -1 0 0 0 0];
+
+internalField   uniform 0.0001;
+
+boundaryField
+{
+     "disc(Front|Side|Back)" 
+    {
+        type	        nutUSpaldingWallFunction;;
+        value           $internalField;
+    }
+
+    "(front|back)CounterPlate" 
+    {
+        type	        nutUSpaldingWallFunction;;
+        value           $internalField;
+    }
+
+    stationaryShaft  
+    {
+        type	        nutUSpaldingWallFunction;;
+        value           $internalField;
+    } 
+
+    shaftRotational  
+    {
+        type	        nutUSpaldingWallFunction;;
+        value           $internalField;
+    } 
+ 
+    sideWall
+    {
+        type	        nutUSpaldingWallFunction;;
+        value           $internalField;
+    } 
+
+    "(top|right)Port"
+    {
+        type	        nutUSpaldingWallFunction;;
+        value           $internalField;
+    } 
+
+ 
+
+    leftPort
+    {
+        type            calculated;
+        value           $internalField;
+    }
+
+    bottomPort
+    {
+        type            calculated;
+        value           $internalField;
+    }
+
+}
+
+// ************************************************************************* //

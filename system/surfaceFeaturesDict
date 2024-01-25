@@ -1,0 +1,41 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      surfaceFeaturesDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+surfaces (
+    "stationaryShaft.stl"
+    "shaftRotational.stl"
+    "leftPort.stl"
+    "rightPort.stl"
+    "discSide.stl"
+    "bottomPort.stl"
+    "topPort.stl"
+    "frontCounterPlate.stl"
+    "discFront.stl"
+    "backCounterPlate.stl"
+    "AMI.stl"
+    "sideWall.stl"
+    "discBack.stl"
+    );
+
+includedAngle       150;
+
+subsetFeatures
+{
+    nonManifoldEdges       yes;
+
+    openEdges       yes;
+}
+
+// ************************************************************************* //

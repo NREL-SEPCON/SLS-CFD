@@ -1,0 +1,44 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  6                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      topoSetDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+actions
+(
+
+    {
+        name    banana_in;
+        type    cellZoneSet;
+        action  new;
+        source  zoneToCell;
+        sourceInfo
+        {
+		name cell_inner_volume;
+        }
+    }
+
+    {
+        name    banana_out;
+        type    cellZoneSet;
+        action  new;
+        source  zoneToCell;
+        sourceInfo
+        {
+		name region0;
+        }
+    }
+
+);
+
+// ************************************************************************* //
